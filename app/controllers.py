@@ -1,0 +1,1 @@
+# There could be some functions for logic of website, but to me, there are no functions that should be there

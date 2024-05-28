@@ -1,0 +1,12 @@
+<div>
+    <h1>Manager Dashboard</h1>
+    <h2>Welcome, {{ user.username }}. You can manage tickets for {{user.group}} group.</h2>
+    {% for ticket in tickets%}
+        <li>
+            <strong>Ticket ID:</strong> {{ ticket.id }}<br>
+            <strong>Status:</strong> {{ ticket.status }}<br>
+            <strong>Note:</strong> {{ ticket.note }}<br>
+            <strong>Group:</strong> {{ ticket.group }}<br>
+        </li>
+    {% endfor %}
+</div>

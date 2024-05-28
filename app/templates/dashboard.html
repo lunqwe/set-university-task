@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    li:hover {
+        background-color: #f0f0f0;
+    }
+    strong {
+        font-weight: bold;
+    }
+    .btn {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+</style>
+<body>
+    <div class='container'>
+        <h1>Welcome, {{ user.username }}!</h1>
+        <a href="{{ url_for('main.create-ticket')}}" class="btn">Create Ticket</a>
+        <a href="{{ url_for('main.logout') }}" class="btn", style='background-color: red'>Logout</a>
+        <ul>
+            {% if user.role == 'admin' %}
+                {% include admin_temp %}
+            {% elif user.role == 'manager' %}
+                {% include manager_temp %}
+            {% elif user.role == 'analyst' %}
+                {% include analyst_temp %}
+            {% endif %}
+        </ul>
+    </div>
+</body>
+</html>
