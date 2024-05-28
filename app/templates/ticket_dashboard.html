@@ -1,0 +1,12 @@
+<div class='width: 100px'>
+{% for ticket in tickets %}
+        <a href={{ url_for('main.ticket_details', ticket_id=ticket.id) }} style='color: inherit; text-decoration: none;'> 
+            <li>
+                <strong>Ticket ID:</strong> {{ ticket.id }}<br>
+                <strong>Status:</strong> {{ ticket.status }}<br>
+                <strong>Note:</strong> {{ ticket.note }}<br>
+                <strong>Group:</strong> {{ ticket.group }}<br>
+            </li>
+        </a>
+{% endfor %}
+</div>

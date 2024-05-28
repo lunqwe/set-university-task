@@ -1,0 +1,108 @@
+
+<style>
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        color: #ffffff;
+    }
+
+    .hidden {
+        display: none;
+    }
+    .btn:hover {
+        background-color: #333333;
+    }
+
+    .btn-back {
+        background-color: #007bff;
+    }
+
+    .btn-edit {
+        background-color: #28a745; 
+    }
+
+    .btn-delete {
+        background-color: #dc3545; 
+    }
+
+
+    .form-container {
+        margin-top: 20px;
+    }
+    
+    li {
+        margin-bottom: 10px;
+    }
+    
+    li label {
+        display: inline-block;
+        width: 100px;
+        font-weight: bold;
+            }
+    
+    li input,
+    li select {
+        width: calc(100% - 110px);
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+</style>
+
+<a class="btn btn-back" href="{{ url_for('main.dashboard', ticket_id=ticket.id) }}"> < Back to Dashboard </a>
+<div style='display: flex; justify-content: center; align-items: center; margin-top: 50px'>
+    <div style='border: 2px solid; width:300px'>
+    <center>
+        <h1>Ticket №{{ ticket.id }}</h1>
+        <br>
+            <strong>Ticket ID:</strong> {{ ticket.id }}<br>
+            <strong>Status:</strong> {{ ticket.status }}<br>
+            <strong>Note:</strong> {{ ticket.note }}<br>
+            <strong>Group:</strong> {{ ticket.group }}<br>
+        <br>
+
+        <button class="btn btn-edit" data-ticket-id="{{ ticket.id }}">Edit ticket</button>
+        <form id="delete-form" action="{{ url_for('main.delete_ticket', ticket_id=ticket.id) }}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-delete">Delete Ticket</button>
+        </form>
+        <div class="form-container">
+            <form id="form" action="{{ url_for('main.update_ticket', ticket_id=ticket.id) }}" method="post" style="display: none; margin-top: 10px; margin-bottom: 20px">
+                <li>
+                    <label for="group"><b>Group</b></label>
+                    <select name="group" required>
+                        <option value="customer1" {% if ticket.group == 'customer1' %} selected {% endif %}>Customer 1</option>
+                        <option value="customer2" {% if ticket.group == 'customer2' %} selected {% endif %}>Customer 2</option>
+                        <option value="customer3" {% if ticket.group == 'customer3' %} selected {% endif %}>Customer 3</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="status"><b>Status</b></label>
+                    <select name="status" required>
+                        <option value="pending" {% if ticket.status == 'pending' %} selected {% endif %}>Pending</option>
+                        <option value="in_review" {% if ticket.status == 'in_review' %} selected {% endif %}>In review</option>
+                        <option value="closed" {% if ticket.status == 'closed' %} selected {% endif %}>Closed</option>
+                    </select>
+                </li>
+                <button type="submit" class="btn btn-edit">Save</button>
+            </form>
+        </div>
+    </center>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const form = document.getElementById('form');
+    $(document).ready(function() {
+        $('.btn').click(function(event) {
+            form.style.display = 'block'; 
+        });
+    });
+</script>

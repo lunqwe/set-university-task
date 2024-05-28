@@ -1,4 +1,4 @@
-from .views import main, LoginView, RegisterView, LogoutView, DashboardView, TicketView
+from .views import main, LoginView, RegisterView, LogoutView, DashboardView, TicketView, ticket_details
 
 main.add_url_rule('/', view_func=LoginView.as_view('login_user'))
 main.add_url_rule('/login', view_func=LoginView.as_view('submit_login'), methods=['POST'])
@@ -8,5 +8,9 @@ main.add_url_rule('/logout', view_func=LogoutView.as_view('logout'))
 main.add_url_rule("/dashboard", view_func=DashboardView.as_view('dashboard'))
 main.add_url_rule('/create-ticket', view_func=TicketView.as_view('create-ticket'))
 main.add_url_rule('/create-ticket-submit', view_func=TicketView.as_view('create-ticket-submit'), methods=['POST'])
+# main.add_url_rule('/ticket/update/<string:ticket_id>', view_func=TicketView.as_view('update_ticket'), methods=['PUT'])
+
+
+
 
 

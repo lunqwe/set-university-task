@@ -92,18 +92,20 @@
                 <input type="password" placeholder="Enter Password" name="password" required>
         
                 <button type="submit">Login</button>
-                <p>Dont have an account? Create one <a href="{{ url_for('main.register_user') }}">here!</p>
+                <p>Dont have an account? Create one <a href="{{ url_for('main.register_user') }}">here!</a></p>
             </div>
         </form>
     </div>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+    <div style='display: flex; justify-content: center; align-items: center; margin-top: 50px'>
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              <ul>
+                  {% for message in messages %}
+                      <li>{{ message }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+      {% endwith %}
+    </div>
 </body>
 </html>

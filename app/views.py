@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, jsonify, render_template, redirect, url_for, request, flash
 from flask.views import MethodView
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import User, Ticket
@@ -70,7 +70,13 @@ class DashboardView(MethodView):
             tickets = Ticket.query.all()
         elif current_user.role == 'manager' or current_user.role == 'analyst':
             tickets = Ticket.query.filter_by(group=current_user.group)
-        return render_template('dashboard.html', tickets=tickets, user=current_user, admin_temp='admin_dashboard.html', manager_temp='manager_dashboard.html', analyst_temp='analyst_dashboard.html')
+        return render_template('dashboard.html',
+                               tickets=tickets,
+                               user=current_user,
+                               admin_temp='admin_dashboard.html',
+                               manager_temp='manager_dashboard.html', 
+                               analyst_temp='analyst_dashboard.html',
+                               ticket_dashboard='ticket_dashboard.html')
     
 
 class TicketView(MethodView):
@@ -89,4 +95,42 @@ class TicketView(MethodView):
 
         flash('Ticket created successfully!')
         return render_template('create_ticket.html')
+    
+    """ possible way to work edit ticket"""
+    # def put(self, ticket_id):
+    #     status = request.json.get('status')
+    #     group = request.json.get('group')
+        
+    #     ticket = Ticket.query.get_or_404(ticket_id)
+    #     ticket.status = status
+    #     ticket.group = group
+    #     db.session.commit()
+        
+    #     flash('Ticket updated successfully!')
+    #     return jsonify('Ticket updated successfully!')
+    
+    
+    
+@main.route('/ticket/<string:ticket_id>')       
+def ticket_details(ticket_id):
+    ticket = Ticket.query.get_or_404(ticket_id)
+    return render_template('ticket_details.html', ticket=ticket)   
 
+@main.route('/ticket/delete/<string:ticket_id>', methods=['POST'])
+def delete_ticket(ticket_id):
+    ticket = Ticket.query.get_or_404(ticket_id)
+    db.session.delete(ticket)
+    db.session.commit()
+    flash('Ticket deleted successfully!')
+    return redirect('/dashboard')
+
+@main.route('/ticket/update/<string:ticket_id>', methods=['POST'])
+def update_ticket(ticket_id):
+    status = request.form['status']
+    group = request.form['group']
+        
+    ticket = Ticket.query.get_or_404(ticket_id)
+    ticket.status = status
+    ticket.group = group
+    db.session.commit()
+    return render_template('ticket_details.html', ticket=ticket)   

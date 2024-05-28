@@ -47,8 +47,17 @@
 
 </style>
 <body>
-    <div class='container'>
+    <div class='container' style='width: 700px'>
         <h1>Welcome, {{ user.username }}!</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <a href="{{ url_for('main.create-ticket')}}" class="btn">Create Ticket</a>
         <a href="{{ url_for('main.logout') }}" class="btn", style='background-color: red'>Logout</a>
         <ul>
