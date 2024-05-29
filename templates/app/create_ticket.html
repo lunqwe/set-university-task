@@ -94,9 +94,13 @@
 </style>
 
 <body>
-    <div style='width: 500px'>
-        <a class="btn btn-back" href="{{ url_for('main.dashboard') }}"> < Back to Dashboard </a>
-        <form action="{{ url_for('main.create-ticket-submit') }}" method="post">
+    <a class="btn btn-back" href="{{ url_for('main.dashboard') }}"> < Back to Dashboard </a>
+    <div style='display: flex; justify-content: center; align-items: center; margin-top: 50px'>
+      <div style='border: 2px solid; width:300px'>
+      <center>
+          <h1>Create ticket</h1>
+          <br>
+          <form action="{{ url_for('main.create-ticket-submit') }}" method="post">
             <div class="container">
                 <label for="note"><b>Note</b></label>
                 <input type="text" placeholder="Enter your notes" name="note" required>
@@ -110,7 +114,9 @@
         
                 <button type="submit">Create Ticket</button>
             </div>
-        </form>
+          </form>
+      </center>
+      </div>
     </div>
     {% with messages = get_flashed_messages() %}
         {% if messages %}

@@ -1,9 +1,6 @@
 from flask_login import UserMixin
 import bcrypt
-from enum import Enum
-
-from config import Config
-from .database import db
+from database import db
 
 
 

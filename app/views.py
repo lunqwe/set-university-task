@@ -2,18 +2,18 @@ from flask import Blueprint, jsonify, render_template, redirect, url_for, reques
 from flask.views import MethodView
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import User, Ticket
-from .database import db 
+from database import db 
 
 
-main = Blueprint('main', __name__)
+router = Blueprint('main', __name__)
 
-@main.route('/')
+@router.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('app/index.html')
 
 class RegisterView(MethodView):
     def get(self):
-        return render_template("register.html")
+        return render_template("app/register.html")
     
     def post(self):
         username = request.form['username']
@@ -45,7 +45,7 @@ class RegisterView(MethodView):
 
 class LoginView(MethodView):
     def get(self):
-        return render_template('login.html')
+        return render_template('app/login.html')
 
     def post(self):
         username = request.form['username']
@@ -74,20 +74,20 @@ class DashboardView(MethodView):
             tickets = Ticket.query.all()
         elif current_user.role == 'manager' or current_user.role == 'analyst':
             tickets = Ticket.query.filter_by(group=current_user.group)
-        return render_template('dashboard.html',
+        return render_template('app/dashboard.html',
                                tickets=tickets,
                                user=current_user,
-                               admin_temp='admin_dashboard.html',
-                               manager_temp='manager_dashboard.html', 
-                               analyst_temp='analyst_dashboard.html',
-                               ticket_dashboard='ticket_dashboard.html')
+                               admin_temp='app/admin_dashboard.html',
+                               manager_temp='app/manager_dashboard.html', 
+                               analyst_temp='app/analyst_dashboard.html',
+                               ticket_dashboard='app/ticket_dashboard.html')
     
 
 class TicketView(MethodView):
     decorators = [login_required]
 
     def get(self):
-        return render_template('create_ticket.html')
+        return render_template('app/create_ticket.html')
     
     def post(self):
         note = request.form['note']
@@ -98,29 +98,17 @@ class TicketView(MethodView):
         db.session.commit()
 
         flash('Ticket created successfully!')
-        return render_template('create_ticket.html')
-    
-    """ possible way to work edit ticket"""
-    # def put(self, ticket_id):
-    #     status = request.json.get('status')
-    #     group = request.json.get('group')
-        
-    #     ticket = Ticket.query.get_or_404(ticket_id)
-    #     ticket.status = status
-    #     ticket.group = group
-    #     db.session.commit()
-        
-    #     flash('Ticket updated successfully!')
-    #     return jsonify('Ticket updated successfully!')
+        return render_template('app/create_ticket.html')
     
     
     
-@main.route('/ticket/<string:ticket_id>')       
+    
+@router.route('/ticket/<string:ticket_id>')       
 def ticket_details(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
-    return render_template('ticket_details.html', ticket=ticket, user=current_user)   
+    return render_template('app/ticket_details.html', ticket=ticket, user=current_user)   
 
-@main.route('/ticket/delete/<string:ticket_id>', methods=['POST'])
+@router.route('/ticket/delete/<string:ticket_id>', methods=['POST'])
 def delete_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
     db.session.delete(ticket)
@@ -128,7 +116,7 @@ def delete_ticket(ticket_id):
     flash('Ticket deleted successfully!')
     return redirect('/dashboard')
 
-@main.route('/ticket/update/<string:ticket_id>', methods=['POST'])
+@router.route('/ticket/update/<string:ticket_id>', methods=['POST'])
 def update_ticket(ticket_id):
     status = request.form['status']
     group = request.form['group']
@@ -137,4 +125,4 @@ def update_ticket(ticket_id):
     ticket.status = status
     ticket.group = group
     db.session.commit()
-    return render_template('ticket_details.html', ticket=ticket, user=current_user)   
+    return render_template('app/ticket_details.html', ticket=ticket, user=current_user)   
