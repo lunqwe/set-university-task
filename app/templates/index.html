@@ -1,0 +1,52 @@
+<style>
+    li {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 15px;
+        font: 1.2rem "Fira Sans", sans-serif;
+    }
+    li:hover {
+        background-color: #f0f0f0;
+    }
+    ul {
+        list-style-type: none;
+    }
+</style>
+
+<div style="width: 700px; justify-content: center; margin: 20px auto;">
+    <div style='margin-bottom: 20px'>
+        <h1 style='font: small-caps bold 30px/1 sans-serif;'> Test task for SET-University </h1>
+        <p style='font-size: 15px; font: 1.2rem "Fira Sans", sans-serif;'> Hello! My name is Roman and that is my implementation of test task. In my project, I implemented the functionality based on the requirements of the test task.
+        Role Based Access Control has been implemented, you can see an example of functionality for an administrator, manager and analyst </p>
+    </div>
+
+    <div style='margin-bottom: 20px'>
+        <h1 style='font: small-caps bold 25px/1 sans-serif;'> User role functionality </h1>
+        <p style='font-size: 15px; font: 1.2rem "Fira Sans", sans-serif;'>
+        <strong>Administrator</strong> - has the ability to delete and edit all tickets.<br>
+        <strong>Manager</strong> - has access to change and delete tickets of the group to which he was associated.<br>
+        <strong>Analyst</strong> - has the ability to view tickets of a specific group, but cannot change or delete them.<br>
+        </p>
+    </div>  
+    <div style='margin-bottom: 20px'>
+        <h1 style='font: small-caps bold 25px/1 sans-serif;'> Auth </h1>
+        <p style='font-size: 15px; font: 1.2rem "Fira Sans", sans-serif;'>
+            To gain access to the functionality, you can use the following <a href="{{ url_for('main.login_user')}}">login</a> information (or <a href="{{ url_for('main.register_user')}}">register a new account</a> by choosing a specific role during registration):
+        </p>
+        <ul>
+            <li> <strong>Administrator</strong>: login: admin | password: 123</li>
+            <li> <strong>Manager</strong> : login: manager | password: 123</li>
+            <li> <strong>Analyst</strong>: login: analyst | password: 123 </li>
+        </ul>
+    </div>
+    <div style='margin-bottom: 20px;'>
+        <h1 style='font: small-caps bold 25px/1 sans-serif;'> Quick access links </h1>
+        <ul>
+            <a href="{{ url_for('main.login_user')}}" style='color: inherit; text-decoration: none;'><li>Login page</li></a>
+            <a href="{{ url_for('main.register_user')}}" style='color: inherit; text-decoration: none;'><li>Registration page</li></a>
+            <a href="{{ url_for('main.dashboard')}}" style='color: inherit; text-decoration: none;'><li>Dashboard (login required)</li></a>
+        </ul>
+    </div>
+</div>

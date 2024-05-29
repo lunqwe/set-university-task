@@ -67,7 +67,7 @@
             <strong>Note:</strong> {{ ticket.note }}<br>
             <strong>Group:</strong> {{ ticket.group }}<br>
         <br>
-
+        {% if user.role != 'analyst' %}
         <button class="btn btn-edit" data-ticket-id="{{ ticket.id }}">Edit ticket</button>
         <form id="delete-form" action="{{ url_for('main.delete_ticket', ticket_id=ticket.id) }}" method="post" style="display: inline;">
             <button type="submit" class="btn btn-delete">Delete Ticket</button>
@@ -93,6 +93,7 @@
                 <button type="submit" class="btn btn-edit">Save</button>
             </form>
         </div>
+        {% endif %}
     </center>
     </div>
 </div>

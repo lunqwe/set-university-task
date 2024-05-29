@@ -7,6 +7,10 @@ from .database import db
 
 main = Blueprint('main', __name__)
 
+@main.route('/')
+def index():
+    return render_template('index.html')
+
 class RegisterView(MethodView):
     def get(self):
         return render_template("register.html")
@@ -114,7 +118,7 @@ class TicketView(MethodView):
 @main.route('/ticket/<string:ticket_id>')       
 def ticket_details(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
-    return render_template('ticket_details.html', ticket=ticket)   
+    return render_template('ticket_details.html', ticket=ticket, user=current_user)   
 
 @main.route('/ticket/delete/<string:ticket_id>', methods=['POST'])
 def delete_ticket(ticket_id):
@@ -133,4 +137,4 @@ def update_ticket(ticket_id):
     ticket.status = status
     ticket.group = group
     db.session.commit()
-    return render_template('ticket_details.html', ticket=ticket)   
+    return render_template('ticket_details.html', ticket=ticket, user=current_user)   
